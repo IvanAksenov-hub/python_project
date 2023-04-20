@@ -5,7 +5,7 @@ con = psycopg2.connect(
     user="admin",
     password="admin",
     host="192.168.1.101",
-    port="5431"
+    port="5432"
 )
 
 print("Database opened successfully")
@@ -23,6 +23,6 @@ for row in cur:
 
 
 
-print("Record inserted successfully")
+print("successfully")
 
 con.close()
