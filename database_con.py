@@ -1,11 +1,11 @@
 import psycopg2
 
 con = psycopg2.connect(
-    database="project",
+    database="work",
     user="admin",
     password="admin",
-    host="192.168.0.109",
-    port="5432"
+    host="192.168.1.123",
+    port="5431"
 )
 
 print("Database opened successfully")
@@ -16,7 +16,7 @@ cur = con.cursor()
 #cur.execute(postgres_insert_query,record_to_insert)
 #con.commit()
 
-sql_select_query = """select * from scheme_1.users"""
+sql_select_query = """select * from work.some_test"""
 cur.execute(sql_select_query)
 for row in cur:
     print(row)
