@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
-    <title>project</title>
-</head>
-<body>
-    <h1>Welcome!</h1>>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Base PAGE {% endblock %}</h1>
+    {% for record in records %}
+        <a href="#">
+            <h2>{{ record['message'] }}</h2>
+        </a>
+        <span class="badge badge-primary">{{ record['date'] }}</span>
+        <hr>
+    {% endfor %}
+{% endblock %}

@@ -3,10 +3,21 @@ import psycopg2
 
 app = Flask(__name__)
 
+def get_db_connection(): 
+    conn = psycopg2.connect(
+        database="work",
+        user="admin",
+        password="admin",
+        host="192.168.1.101",
+        port="5433"
+    )
 
 @app.route("/")
 def index():
-    return render_template('index.html')
+    connection = get_db_connection()
+    sql_select_query = """select * from work.some_test"""
+    connection.close()
+    return render_template('index.html', records=sql_select_query)
 
 
 
