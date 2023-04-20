@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Base PAGE {% endblock %}</h1>
-    {% for record in records %}
-        <a href="#">
-            <h2>{{ record['message'] }}</h2>
-        </a>
-        <span class="badge badge-primary">{{ record['date'] }}</span>
-        <hr>
-    {% endfor %}
+    <h1>{% block title %} Base PAGE ! {% endblock %}</h1>
+
+<!doctype html>
+<h1><title>Simple tables</title></h1>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/df_style.css') }}"/>
+<div>
+    <head>
+        <link rel="import" href="frame.html">
+    </head>
+</div>
 {% endblock %}

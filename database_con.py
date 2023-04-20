@@ -18,8 +18,13 @@ cur = con.cursor()
 
 sql_select_query = """select * from work.some_test"""
 cur.execute(sql_select_query)
+rec = []
 for row in cur:
-    print(row)
+    rec.append(row)
+    for i in row:
+        print(row[1])
+print(rec[0])
+
 
 
 
