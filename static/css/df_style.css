@@ -1,22 +1,27 @@
 /* includes alternating gray and white with on-hover color */
 
-.mystyle {
-    font-size: 11pt;
+.tablestyle {
+    font-size: 12pt;
     font-family: Arial;
+    text-align: center;
     border-collapse: collapse;
-    border: 1px solid silver;
+    border: 3px solid silver;
 
 }
 
-.mystyle td, th {
+.tablemystyle td, th {
+    background-color: #CD5C5C;
+    border: 1px solid black;
     padding: 5px;
 }
 
-.mystyle tr:nth-child(even) {
-    background: #CD5C5C;
+
+.tablemystyle tr:nth-child(even) {
+    background-color: #d7d7d7;
+    border: 1px solid black;
+
 }
 
-.mystyle tr:hover {
-    background: silver;
+.tablemystyle tr:hover {
     cursor: pointer;
 }
