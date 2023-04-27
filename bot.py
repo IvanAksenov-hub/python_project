@@ -9,7 +9,7 @@ delimiter = ', '
 def get_text_messages(message):
     if message.text == "select messages":
         list_of_rows = []
-        conn = psycopg2.connect("dbname=work user=admin password=admin host=192.168.1.101 port=5433")
+        conn = psycopg2.connect("dbname=work user=admin password=admin host=192.168.100.101 port=5433")
         cur = conn.cursor()
         sql_select_query = """select message from work.some_test order by id"""
         cur.execute(sql_select_query)
@@ -29,7 +29,7 @@ def get_text_messages(message):
 def input_message(message):
         bot.reply_to(message, f" add  {message.text} message to DB")
         mess = message.text
-        conn = psycopg2.connect("dbname=work user=admin password=admin host=192.168.1.101 port=5433")
+        conn = psycopg2.connect("dbname=work user=admin password=admin host=192.168.100.101 port=5433")
         cur = conn.cursor()
         cur.execute("INSERT INTO work.some_test (message) VALUES (%s)", [mess])
         conn.commit()

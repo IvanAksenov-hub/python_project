@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    conn = psycopg2.connect("dbname=work user=admin password=admin host=192.168.1.101 port=5433")
+    conn = psycopg2.connect("dbname=work user=admin password=admin host=192.168.100.101 port=5433")
     cur = conn.cursor()
     message_by_id = [('some text')]
     message_id = ''
