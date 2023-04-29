@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Определите переменные окружения
-ENV FLASK_APP=app.py
+ENV FLASK_APP=server.py
 
 # Указываем порт, на котором будет работать приложение
 EXPOSE 5000
