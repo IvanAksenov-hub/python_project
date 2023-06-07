@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Base PAGE ! {% endblock %}</h1>
+    <h1>{% block title %} Table map_labels {% endblock %}</h1>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/df_style.css') }}"/>
-
+    {{ table_map_labels_html | safe }}
 {% endblock %}

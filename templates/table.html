@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Table some_test {% endblock %}</h1>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/df_style.css') }}"/>
+    {{ table_html | safe }}
+    <br>
+    <form method="POST">
+        <input type="hidden" name="action" value="insert_form">
+        <label for="message">insert a message:</label>
+        <input type="text" name="message" id="message">
+        <input type="submit" value="Submit">
+    </form>
+    <form method="POST">
+        <input type="hidden" name="action" value="id_form">
+        <label for="message">select message ID</label>
+        <input type="text" name="message_id" id="message_id">
+        <input type="submit" value="Submit">
+    </form>
+    <form method="POST">
+        <input type="hidden" name="action" value="update_form">
+        <input type="hidden" name="message_id" value="{{ message_id }}">
+        <label for="message">Message:</label>
+        <input type="text" name="update_message" value="{{ message_by_id[0] }}" id="update_message">
+        <button type="submit" name="update_button">Update Message</button>
+        <button type="submit" name="delete_button">DELETE Message</button>
+    </form>
+    <p>message_id: {{ message_id }}</p>
+{% endblock %}

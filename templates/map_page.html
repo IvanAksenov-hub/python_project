@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+<h1>
+{% block title %}
+    OpenStreetMap in Flask
+{% endblock %}
+</h1>
+
+{% block styles %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/df_style.css') }}"/>
+{% endblock %}
+
+{% block content %}
+    <div class="map-frame" id="map"></div>
+    <form method="POST">
+        <label for="coordinates">Coordinates:</label>
+        <input type="text" name="coordinates" value="" id="coordinates">
+    </form>
+    <form method="POST">
+        <input type="hidden" name="lat" value="" id="lat">
+        <input type="hidden" name="lng" value="" id="lng">
+        <label for="label">Label:</label>
+        <input type="text" name="label" value="label" id="label">
+        <button type="submit" name="action" value="save_coord">Save coord with label</button>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([55.7522, 37.6156], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker;
+
+        // Функция для обработки клика на карту и установки метки
+        function handleMapClick(e) {
+            // Если метка уже существует, удаляем ее
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            // Создаем новую метку и добавляем на карту
+            marker = L.marker(e.latlng).addTo(map);
+
+            // Получаем координаты метки
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            // Записываем координаты в скрытые поля формы
+            document.getElementById('lat').value = lat;
+            document.getElementById('lng').value = lng;
+
+            // Обновляем значение поля с координатами
+            document.getElementById('coordinates').value = lat + ';' + lng;
+
+            // Выводим координаты метки в консоль
+            console.log('Координаты метки:', lat, lng);
+        }
+        // Обработчик клика на карту
+        map.on('click', handleMapClick);
+    </script>
+{% endblock %}

@@ -25,3 +25,10 @@
 .tablemystyle tr:hover {
     cursor: pointer;
 }
+
+/* CSS для контейнера фрейма */
+.map-frame {
+     width: 800px;
+     height: 600px;
+     border: 1px solid #ccc;
+}
