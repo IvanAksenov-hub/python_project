@@ -1,7 +1,24 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
+from prometheus_flask_exporter import PrometheusMetrics
 import psycopg2
+from loguru import logger
+from prometheus_client import Counter
+import io
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+
+# Создание счетчика Prometheus
+log_counter = Counter('logs_total', 'Total number of logs')
+
+# Буфер для хранения логов
+log_buffer = io.StringIO()
+
+logger.add(log_buffer.write)
+@app.route('/log')
+def view_logs():
+    logs = log_buffer.getvalue()
+    return Response(logs, mimetype='text/plain')
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -15,18 +32,22 @@ def index():
                 message = request.form['message']
                 cur.execute("INSERT INTO work.some_test (message) VALUES (%s)", [message])
                 conn.commit()
+                logger.info("insert in table work.some_test - " + str(message))
             elif request.form['action'] == 'id_form':
                 message_id = request.form['message_id']
                 cur.execute("SELECT message FROM work.some_test where id = (%s)", [message_id])
                 message_by_id = cur.fetchone()
                 conn.commit()
+                logger.info("request message from table work.some_test where id =  " + str(message_id))
             elif request.form['action'] == 'update_form':
                 message_id = int(request.form['message_id'])
                 update_message = str(request.form['update_message'])
                 if 'update_button' in request.form:
                     cur.execute("UPDATE work.some_test SET message = %s WHERE id = %s", (update_message, message_id))
+                    logger.info("update message from table work.some_test where id =  " + str(message_id))
                 elif 'delete_button' in request.form:
                     cur.execute("DELETE FROM work.some_test WHERE id = %s", (message_id,))
+                    logger.info("delete message from table work.some_test where id =  " + str(message_id))
                 conn.commit()
         except Exception as e:
             print(e)
@@ -36,6 +57,7 @@ def index():
     num_cols = len(cur.description)
     table_html = "<table border="'1'" class="'tablestyle'" class="'dataframe'">"
     table_html += "<thead><tr>"
+    # динамически создаваемая таблица для результата
     for col in cur.description:
         table_html += "<th>" + col.name + "</th>"
     table_html += "</tr></thead>"
